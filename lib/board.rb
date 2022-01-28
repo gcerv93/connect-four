@@ -23,9 +23,9 @@ class Board
   def update_board(column, symbol)
     board.each_with_index do |row, idx|
       if row[column].empty? && idx == 5
-        row[column] = symbol
+        assign_symbol(idx, column, symbol)
       elsif !row[column].empty? && board[idx - 1][column].empty?
-        board[idx - 1][column] = symbol
+        assign_symbol(idx - 1, column, symbol)
       end
     end
   end
@@ -38,5 +38,9 @@ class Board
         row[i] = '' if cell == ' '
       end
     end
+  end
+
+  def assign_symbol(row, column, symbol)
+    board[row][column] = symbol
   end
 end
