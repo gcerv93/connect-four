@@ -58,6 +58,31 @@ describe Board do
       end
     end
   end
+
+  describe '#column_full?' do
+    it 'returns true if column is full' do
+      column = 3
+      board.board[5][column] = 'o'
+      board.board[4][column] = 'o'
+      board.board[3][column] = 'o'
+      board.board[2][column] = 'o'
+      board.board[1][column] = 'o'
+      board.board[0][column] = 'o'
+      result = board.column_full?(column)
+      expect(result).to eq(true)
+    end
+
+    it 'returns false if column is not full' do
+      column = 3
+      board.board[5][column] = 'o'
+      board.board[4][column] = 'o'
+      board.board[3][column] = 'o'
+      board.board[2][column] = 'o'
+      board.board[1][column] = 'o'
+      result = board.column_full?(column)
+      expect(result).to eq(false)
+    end
+  end
 end
 
 # rubocop: enable Metrics/BlockLength

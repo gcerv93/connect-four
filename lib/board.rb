@@ -30,6 +30,16 @@ class Board
     end
   end
 
+  def column_full?(column)
+    i = 0
+    while i < 6
+      return false if board[i][column].empty?
+
+      i += 1
+    end
+    true
+  end
+
   private
 
   def reconfigure_board

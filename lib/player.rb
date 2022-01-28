@@ -12,7 +12,7 @@ class Player
       puts 'Please enter a column number'
       column = gets.to_i - 1
       return column if column.between?(0, 6)
-  
+
       puts 'Please select a column between 1-7'
     end
   end
