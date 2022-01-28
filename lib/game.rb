@@ -6,7 +6,7 @@ require_relative './player'
 # class for the game logic
 class Game
   attr_reader :board
-  attr_accessor :player_one, :player_two
+  attr_accessor :player_one, :player_two, :current_player
 
   def initialize
     @board = Board.new
@@ -20,5 +20,13 @@ class Game
 
     puts 'Player two, what is your name?'
     @player_two = Player.new(gets.chomp, 'O')
+
+    @current_player = @player_one
+  end
+
+  private
+
+  def change_current_player
+    @current_player = @current_player == player_one ? player_two : player_one
   end
 end
