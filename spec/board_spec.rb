@@ -83,6 +83,64 @@ describe Board do
       expect(result).to eq(false)
     end
   end
+
+  describe '#row_win?' do
+    context 'when theres a win on a row' do
+      it 'returns true if starting from index 0' do
+        row = 5
+        symbol = 'x'
+        board.board[row][0] = symbol
+        board.board[row][1] = symbol
+        board.board[row][2] = symbol
+        board.board[row][3] = symbol
+        result = board.row_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it 'returns true if starting from index 1' do
+        row = 5
+        symbol = 'x'
+        board.board[row][1] = symbol
+        board.board[row][2] = symbol
+        board.board[row][3] = symbol
+        board.board[row][4] = symbol
+        result = board.row_win?(symbol)
+        expect(result).to eq(true)
+      end
+    end
+
+    context "when there's not a win on a row" do
+      it 'returns false when empty' do
+        symbol = 'x'
+        result = board.row_win?(symbol)
+        expect(result).to eq(false)
+      end
+
+      it 'returns false when only 3 in a row' do
+        row = 0
+        symbol = 'x'
+        board.board[row][0] = symbol
+        board.board[row][1] = symbol
+        board.board[row][2] = symbol
+        result = board.row_win?(symbol)
+        expect(result).to eq(false)
+      end
+
+      it 'returns false when symbols are interspersed' do
+        row = 0
+        symbol_x = 'x'
+        symbol_y = 'y'
+        board.board[row][0] = symbol_x
+        board.board[row][1] = symbol_y
+        board.board[row][2] = symbol_x
+        board.board[row][3] = symbol_y
+        board.board[row][4] = symbol_x
+        board.board[row][5] = symbol_y
+        result = board.row_win?(symbol_x)
+        expect(result).to eq(false)
+      end
+    end
+  end
 end
 
 # rubocop: enable Metrics/BlockLength

@@ -40,6 +40,18 @@ class Board
     true
   end
 
+  def row_win?(symbol)
+    check = []
+    board.each do |row|
+      row.each_with_index do |cell, idx|
+        check << row[idx..idx + 3] if cell == symbol && idx < 4
+        check.flatten.all?(symbol) ? (return true) : next unless check.empty?
+      end
+      check.clear
+    end
+    false
+  end
+
   private
 
   def reconfigure_board
