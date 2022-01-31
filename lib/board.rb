@@ -44,7 +44,20 @@ class Board
     check = []
     board.each do |row|
       row.each_with_index do |cell, idx|
-        check << row[idx..idx + 3] if cell == symbol && idx < 4
+        check << row[idx..idx + 3] if cell == symbol && idx < 3
+        check.flatten.all?(symbol) ? (return true) : next unless check.empty?
+      end
+      check.clear
+    end
+    false
+  end
+
+  # reverse the board before transposing, otherwise columns will be flipped
+  def column_win?(symbol)
+    check = []
+    board.reverse.transpose.each do |col|
+      col.each_with_index do |cell, idx|
+        check << col[idx..idx + 3] if cell == symbol && idx < 4
         check.flatten.all?(symbol) ? (return true) : next unless check.empty?
       end
       check.clear

@@ -141,6 +141,64 @@ describe Board do
       end
     end
   end
+
+  describe '#column_win?' do
+    context "when there's a column win" do
+      it 'returns true starting from bottom row' do
+        symbol = 'x'
+        column = 0
+        board.board[5][column] = symbol
+        board.board[4][column] = symbol
+        board.board[3][column] = symbol
+        board.board[2][column] = symbol
+        result = board.column_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it 'returns true in middle of column' do
+        symbol = 'x'
+        column = 3
+        board.board[3][column] = symbol
+        board.board[2][column] = symbol
+        board.board[1][column] = symbol
+        board.board[0][column] = symbol
+        result = board.column_win?(symbol)
+        expect(result).to eq(true)
+      end
+    end
+
+    context "when there's no column win" do
+      it 'returns false when empty' do
+        symbol = 'x'
+        result = board.column_win?(symbol)
+        expect(result).to eq(false)
+      end
+
+      it 'returns false when only 3 in a column' do
+        symbol = 'x'
+        column = 5
+        board.board[5][column] = symbol
+        board.board[4][column] = symbol
+        board.board[3][column] = symbol
+        result = board.column_win?(symbol)
+        expect(result).to eq(false)
+      end
+
+      it 'returns false when symbols are interspersed' do
+        symbol_x = 'x'
+        symbol_o = 'o'
+        column = 4
+        board.board[5][column] = symbol_x
+        board.board[4][column] = symbol_o
+        board.board[3][column] = symbol_x
+        board.board[2][column] = symbol_o
+        board.board[1][column] = symbol_x
+        board.board[0][column] = symbol_o
+        result = board.column_win?(symbol_o)
+        expect(result).to eq(false)
+      end
+    end
+  end
 end
 
 # rubocop: enable Metrics/BlockLength
