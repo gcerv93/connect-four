@@ -2,7 +2,7 @@
 
 # class for each player
 class Player
-  attr_reader :symbol
+  attr_reader :symbol, :name
 
   def initialize(name, symbol)
     @name = name
@@ -11,7 +11,8 @@ class Player
 
   def choose_column
     loop do
-      puts 'Please enter a column number'
+      puts "\n"
+      puts "#{name}, please enter a column number"
       column = gets.to_i - 1
       return column if column.between?(0, 6)
 
