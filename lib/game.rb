@@ -17,10 +17,10 @@ class Game
 
   def assign_players
     puts 'Player one, what is your name?'
-    @player_one = Player.new(gets.chomp, 'X')
+    @player_one = Player.new(gets.chomp, "\u263a")
     puts "\n"
     puts 'Player two, what is your name?'
-    @player_two = Player.new(gets.chomp, 'O')
+    @player_two = Player.new(gets.chomp, "\u263b")
     puts "\n"
     @current_player = @player_one
   end
@@ -63,7 +63,7 @@ class Game
 
   def new_game?
     puts 'Press Y if you want to play a new game, press any other key to quit'
-    answer = gets.chomp
-    answer == 'Y' || answer == 'y' ? Game.new.start_game : (puts 'GoodBye')
+    answer = gets.chomp.downcase
+    answer == 'y' ? Game.new.start_game : (puts 'GoodBye')
   end
 end
