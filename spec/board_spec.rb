@@ -199,6 +199,112 @@ describe Board do
       end
     end
   end
+
+  describe '#diagonal_win?' do
+    context "when there's a corner win" do
+      it "returns true when there's a win from bottom right corner" do
+        symbol = 'x'
+        board.board[5][6] = symbol
+        board.board[4][5] = symbol
+        board.board[3][4] = symbol
+        board.board[2][3] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it "returns true when there's a win from bottom left corner" do
+        symbol = 'x'
+        board.board[5][0] = symbol
+        board.board[4][1] = symbol
+        board.board[3][2] = symbol
+        board.board[2][3] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it "returns true when there's a win from top right corner" do
+        symbol = 'x'
+        board.board[0][6] = symbol
+        board.board[1][5] = symbol
+        board.board[2][4] = symbol
+        board.board[3][3] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it "returns true when there's a win from top left corner" do
+        symbol = 'x'
+        board.board[0][0] = symbol
+        board.board[1][1] = symbol
+        board.board[2][2] = symbol
+        board.board[3][3] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+    end
+
+    context "when there's a win in middle of board" do
+      it 'returns true to right diagonal' do
+        symbol = 'x'
+        board.board[4][2] = symbol
+        board.board[3][3] = symbol
+        board.board[2][4] = symbol
+        board.board[1][5] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it 'returns true to left diagonal' do
+        symbol = 'x'
+        board.board[4][4] = symbol
+        board.board[3][3] = symbol
+        board.board[2][2] = symbol
+        board.board[1][1] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+
+      it 'returns true' do
+        symbol = 'x'
+        board.board[1][3] = symbol
+        board.board[2][4] = symbol
+        board.board[3][5] = symbol
+        board.board[4][6] = symbol
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(true)
+      end
+    end
+
+    context "when there's no diagonal win" do
+      it 'returns false when the board is empty' do
+        symbol = 'x'
+        result = board.diagonal_win?(symbol)
+        expect(result).to eq(false)
+      end
+
+      it 'returns false when symbols are insterspersed' do
+        symbol_x = 'x'
+        symbol_o = 'o'
+        board.board[5][6] = symbol_x
+        board.board[4][5] = symbol_o
+        board.board[3][4] = symbol_x
+        board.board[2][3] = symbol_o
+        result = board.diagonal_win?(symbol_x)
+        expect(result).to eq(false)
+      end
+
+      it 'returns false when symbols are interspersed' do
+        symbol_x = 'x'
+        symbol_o = 'o'
+        board.board[4][4] = symbol_x
+        board.board[3][3] = symbol_o
+        board.board[2][2] = symbol_x
+        board.board[1][1] = symbol_o
+        result = board.diagonal_win?(symbol_x)
+        expect(result).to eq(false)
+      end
+    end
+  end
 end
 
 # rubocop: enable Metrics/BlockLength

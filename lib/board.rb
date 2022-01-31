@@ -40,7 +40,7 @@ class Board
     true
   end
 
-  def row_win?(symbol)
+  def row_win?(symbol, board = @board)
     check = []
     board.each do |row|
       row.each_with_index do |cell, idx|
@@ -52,15 +52,21 @@ class Board
     false
   end
 
-  # reverse the board before transposing, otherwise columns will be flipped
+  # reverse the board before transposing, otherwise columns will be
   def column_win?(symbol)
-    check = []
-    board.reverse.transpose.each do |col|
-      col.each_with_index do |cell, idx|
-        check << col[idx..idx + 3] if cell == symbol && idx < 4
-        check.flatten.all?(symbol) ? (return true) : next unless check.empty?
+    row_win?(symbol, board.reverse.transpose)
+  end
+
+  def diagonal_win?(symbol)
+    board.reverse.each_with_index do |row, idx|
+      row.each_with_index do |_cell, i|
+        return true if up_left_diag(idx, i, symbol)
+
+        return true if left_diag(idx, i, symbol)
+
+        return true if right_diag(idx, i, symbol)
       end
-      check.clear
+      break if idx >= 2
     end
     false
   end
@@ -77,5 +83,38 @@ class Board
 
   def assign_symbol(row, column, symbol)
     board[row][column] = symbol
+  end
+
+  def left_diag(row, col, symbol)
+    board = @board.reverse
+    check = [board[row][col]]
+    3.times do
+      row -= 1
+      col += 1
+      check << board[row][col] unless row.negative?
+    end
+    return check.all?(symbol) if check.length == 4
+  end
+
+  def up_left_diag(row, col, symbol)
+    board = @board.reverse
+    check = [board[row][col]]
+    3.times do
+      row += 1
+      col -= 1
+      check << board[row][col] unless row.negative? || col.negative?
+    end
+    return check.all?(symbol) if check.length == 4
+  end
+
+  def right_diag(row, col, symbol)
+    board = @board.reverse
+    check = [board[row][col]]
+    3.times do
+      row += 1
+      col += 1
+      check << board[row][col] unless row > 5 || col > 6
+    end
+    return check.all?(symbol) if check.length == 4
   end
 end
