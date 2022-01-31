@@ -27,7 +27,7 @@ class Game
 
   def game_loop
     while turns <= 42
-      board.update_board(current_player.choose_column, current_player.symbol)
+      board.update_board(current_player.choose_column(board), current_player.symbol)
       board.display_board
       if current_player.win?(board)
         congratulate_winner

@@ -9,12 +9,12 @@ class Player
     @symbol = symbol
   end
 
-  def choose_column
+  def choose_column(board)
     loop do
       puts "\n"
       puts "#{name}, please enter a column number"
       column = gets.to_i - 1
-      return column if column.between?(0, 6)
+      return column if column.between?(0, 6) && !board.column_full?(column)
 
       puts 'Please select a column between 1-7'
     end
