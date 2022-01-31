@@ -2,6 +2,8 @@
 
 # class for each player
 class Player
+  attr_reader :symbol
+
   def initialize(name, symbol)
     @name = name
     @symbol = symbol
@@ -15,5 +17,11 @@ class Player
 
       puts 'Please select a column between 1-7'
     end
+  end
+
+  def win?(board)
+    board.row_win?(symbol) ||
+      board.column_win?(symbol) ||
+      board.diagonal_win?(symbol)
   end
 end
