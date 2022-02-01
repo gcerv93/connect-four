@@ -20,6 +20,7 @@ class Board
     reconfigure_board
   end
 
+  # populate the board in the proper column, making sure the column is empty
   def update_board(column, symbol)
     board.each_with_index do |row, idx|
       if row[column].empty? && idx == 5
@@ -30,6 +31,7 @@ class Board
     end
   end
 
+  # method to check if a particular column is full
   def column_full?(column)
     i = 0
     while i < 6
@@ -40,6 +42,7 @@ class Board
     true
   end
 
+  # check for row wins
   def row_win?(symbol, board = @board)
     check = []
     board.each do |row|
@@ -52,7 +55,7 @@ class Board
     false
   end
 
-  # reverse the board before transposing, otherwise columns will be
+  # reverse and transpose the board so that columns become rows, send to row win?
   def column_win?(symbol)
     row_win?(symbol, board.reverse.transpose)
   end
@@ -73,6 +76,7 @@ class Board
 
   private
 
+  # done after displaying to make sure .empty? works
   def reconfigure_board
     board.each do |row|
       row.each_with_index do |cell, i|
@@ -85,6 +89,7 @@ class Board
     board[row][column] = symbol
   end
 
+  # these 3 functions help find diagonal wins, havent found a way to DRY these out
   def left_diag(row, col, symbol)
     board = @board.reverse
     check = [board[row][col]]

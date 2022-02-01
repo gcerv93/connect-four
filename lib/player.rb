@@ -9,6 +9,7 @@ class Player
     @symbol = symbol
   end
 
+  # send in the board object to check if column is full
   def choose_column(board)
     loop do
       puts "\n"
@@ -20,6 +21,7 @@ class Player
     end
   end
 
+  # send messages to board object to check for player wins
   def win?(board)
     board.row_win?(symbol) ||
       board.column_win?(symbol) ||
